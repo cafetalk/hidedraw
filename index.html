@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>你画我猜 - Web 小游戏</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app__header">
+      <div>
+        <h1>你画我猜</h1>
+        <p class="subtitle">邀请朋友一起猜词，计时挑战更好玩！</p>
+      </div>
+      <div class="status">
+        <div class="status__item">
+          <span class="label">倒计时</span>
+          <span id="timer" class="value">60</span>
+        </div>
+        <div class="status__item">
+          <span class="label">得分</span>
+          <span id="score" class="value">0</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="app__main">
+      <section class="panel panel--left">
+        <div class="word-card">
+          <h2>当前词语</h2>
+          <div id="current-word" class="word">点击“开始新局”生成</div>
+          <button id="new-round" class="primary">开始新局</button>
+        </div>
+
+        <div class="tools">
+          <h3>画笔工具</h3>
+          <div class="tool-row">
+            <label for="color-picker">颜色</label>
+            <input type="color" id="color-picker" value="#2f2f2f" />
+          </div>
+          <div class="tool-row">
+            <label for="brush-size">粗细</label>
+            <input type="range" id="brush-size" min="2" max="24" value="6" />
+            <span id="brush-value">6px</span>
+          </div>
+          <div class="tool-row tool-row--buttons">
+            <button id="clear-canvas" class="secondary">清空画布</button>
+            <button id="hint" class="secondary">提示</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel panel--center">
+        <div class="canvas-wrapper">
+          <canvas id="draw-board" width="720" height="480"></canvas>
+        </div>
+        <div class="canvas-tip">按住鼠标或触控屏开始作画。</div>
+      </section>
+
+      <section class="panel panel--right">
+        <div class="guess-card">
+          <h2>猜词区</h2>
+          <form id="guess-form">
+            <input
+              id="guess-input"
+              type="text"
+              placeholder="输入你的猜测…"
+              autocomplete="off"
+              required
+            />
+            <button type="submit" class="primary">提交猜测</button>
+          </form>
+          <div id="guess-message" class="message"></div>
+        </div>
+
+        <div class="history-card">
+          <h3>猜词记录</h3>
+          <ul id="guess-history" class="history"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
