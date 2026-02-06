@@ -24,6 +24,7 @@ let currentWord = "";
 let score = 0;
 let countdown = 60;
 let timerId = null;
+let roundActive = false;
 
 const drawingState = {
   strokes: [],
@@ -119,6 +120,7 @@ const resetRound = () => {
   guessMessage.classList.remove("success");
   countdown = 60;
   timerEl.textContent = countdown;
+  roundActive = true;
   if (timerId) {
     clearInterval(timerId);
   }
@@ -134,6 +136,7 @@ const resetRound = () => {
 const endRound = (message, success) => {
   clearInterval(timerId);
   timerId = null;
+  roundActive = false;
   guessMessage.textContent = message;
   guessMessage.classList.toggle("success", success);
 };
@@ -149,8 +152,9 @@ const addHistory = (guess, isCorrect) => {
 
 const handleGuess = (event) => {
   event.preventDefault();
-  if (!currentWord) {
-    guessMessage.textContent = "请先开始新局。";
+  if (!roundActive) {
+    guessMessage.textContent = currentWord ? "本局已结束，请开始新局。" : "请先开始新局。";
+    guessMessage.classList.remove("success");
     return;
   }
   const guess = guessInput.value.trim();
@@ -169,8 +173,9 @@ const handleGuess = (event) => {
 };
 
 const giveHint = () => {
-  if (!currentWord) {
-    guessMessage.textContent = "请先开始新局。";
+  if (!roundActive) {
+    guessMessage.textContent = currentWord ? "本局已结束，请开始新局。" : "请先开始新局。";
+    guessMessage.classList.remove("success");
     return;
   }
   const hintLength = Math.max(1, Math.floor(currentWord.length / 2));
